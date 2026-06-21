@@ -66,7 +66,7 @@ const keyboardRows = [
 
 const upgrades = [
   { id: "fingers", icon: "F1", name: "Dedos rapidos", desc: "+1 por tecla", bonus: 1, base: 25, owned: 0 },
-  { id: "switches", icon: "IMG:upgrade-mechanical-switch.png", name: "Switches mecanicos", desc: "+6 por tecla", bonus: 6, base: 180, owned: 0 },
+  { id: "switches", icon: "IMG:upgrade-mechanical-switch-clean.png", name: "Switches mecanicos", desc: "+6 por tecla", bonus: 6, base: 180, owned: 0 },
   { id: "rgb", icon: "RGB", name: "RGB gamer", desc: "+28 por tecla", bonus: 28, base: 1200, owned: 0 },
   { id: "premium", icon: "PRO", name: "Teclado premium", desc: "+140 por tecla", bonus: 140, base: 9000, owned: 0 },
   { id: "mainframe", icon: "CPU", name: "Superordenador", desc: "+700 por tecla", bonus: 700, base: 68000, owned: 0 }
@@ -531,15 +531,15 @@ function rebirth() {
 
 function spawnEvent() {
   const labels = [
-    { text: "Tecla dorada", reward: 900, asset: "powerup-golden-key.png" },
-    { text: "Cofre de switches", reward: 2200, asset: "upgrade-mechanical-switch.png" },
-    { text: "Lluvia de teclas", reward: 5400, asset: "powerup-key-rain.png" }
+    { text: "Tecla dorada", reward: 900, asset: "powerup-golden-key-clean.png" },
+    { text: "Cofre de switches", reward: 2200, asset: "upgrade-mechanical-switch-clean.png" },
+    { text: "Lluvia de teclas", reward: 5400, asset: "powerup-key-rain-clean.png" }
   ];
   const event = labels[Math.floor(Math.random() * labels.length)];
   const chip = document.createElement("button");
   chip.className = "event-chip";
   chip.type = "button";
-  chip.innerHTML = `<img src="/Assets/${event.asset}" alt="" /><span>${event.text}</span>`;
+  chip.innerHTML = `<img src="/Assets/clean/${event.asset}" alt="" /><span>${event.text}</span>`;
   chip.style.left = `${12 + Math.random() * 68}%`;
   chip.style.top = `${18 + Math.random() * 54}%`;
   chip.addEventListener("click", () => {
@@ -639,7 +639,7 @@ function shopHtml(item, fn, meta = item.desc) {
 
 function iconHtml(icon) {
   if (icon.startsWith("IMG:")) {
-    return `<img src="/Assets/${icon.replace("IMG:", "")}" alt="" />`;
+    return `<img src="/Assets/clean/${icon.replace("IMG:", "")}" alt="" />`;
   }
   return icon;
 }
