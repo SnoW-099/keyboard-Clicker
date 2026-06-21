@@ -18,7 +18,7 @@
   --key-special: url("/Assets/clean/key-special-clean.png");
   --key-special-pressed: url("/Assets/clean/key-special-pressed-clean.png");
   --key-space: url("/Assets/clean/key-space-clean.png");
-  --keyboard-base: url("/Assets/clean/keyboard-base-office-clean.png");
+  --keyboard-base: url("/Assets/clean/keyboard-base-plain-clean.png");
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -254,70 +254,68 @@ small,
     0 16px 46px rgba(0, 0, 0, 0.34);
 }
 
-.keyboard {
+.keyboard-wrapper {
   position: relative;
-  width: min(960px, 98%);
+  width: min(920px, 94%);
   aspect-ratio: 1509 / 913;
-  padding: 10.4% 8.4% 13.2%;
-  border-radius: 0;
-  background: var(--keyboard-base) center / 100% 100% no-repeat;
-  border: 0;
-  box-shadow:
-    0 44px 76px rgba(0, 0, 0, 0.62),
-    0 16px 0 rgba(0, 0, 0, 0.22);
-  display: grid;
-  grid-template-rows: repeat(5, minmax(0, 1fr));
-  gap: 2.25%;
-  transform: perspective(1100px) rotateX(4deg);
-  image-rendering: pixelated;
+  transform: none;
 }
 
-.keyboard::before {
-  display: none;
-}
-
-.keyboard::after {
-  content: "";
+.keyboard-base {
   position: absolute;
-  left: 9%;
-  right: 9%;
-  bottom: 3.5%;
-  height: 5%;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.45);
-  filter: blur(12px);
-  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.keys-layer {
+  position: absolute;
+  left: 58px;
+  top: 64px;
+  right: 58px;
+  bottom: 88px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1.14fr;
+  gap: 9px;
+  z-index: 2;
 }
 
 .key-row {
   position: relative;
   z-index: 1;
-  display: flex;
-  gap: 1.2%;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 8px;
   min-height: 0;
+  align-items: end;
 }
 
 .keycap {
-  flex: var(--span) 1 0;
+  grid-column: span var(--span);
   min-width: 0;
-  height: auto;
+  height: 100%;
   min-height: 0;
-  padding: 0.08em 0.24em 0.34em;
+  padding: 0 0.12em 0.12em;
   border-radius: 0;
   color: #f6efe3;
-  background: var(--key-normal) center / 100% 100% no-repeat;
+  background: var(--key-normal) center bottom / 100% 100% no-repeat;
   border: 0;
   box-shadow:
-    0 0.38em 0 rgba(0, 0, 0, 0.24),
-    0 0.62em 0.9em rgba(0, 0, 0, 0.22);
+    0 4px 0 rgba(0, 0, 0, 0.18),
+    0 8px 11px rgba(0, 0, 0, 0.14);
   display: grid;
   place-items: center;
   font-weight: 950;
-  font-size: clamp(8px, 0.92vw, 13px);
+  font-size: clamp(8px, 0.88vw, 12px);
   text-transform: uppercase;
   user-select: none;
   transition: transform 80ms ease, filter 80ms ease, background 80ms ease, box-shadow 80ms ease;
   image-rendering: pixelated;
+  align-self: end;
 }
 
 .keycap:hover {
@@ -326,17 +324,18 @@ small,
 
 .keycap:active,
 .keycap.pressed {
-  transform: translateY(0.34em);
+  transform: translateY(3px);
   color: #fff2bf;
   background-image: var(--key-pressed);
   box-shadow:
-    0 0.12em 0 rgba(0, 0, 0, 0.35),
-    0 0.18em 0.5em rgba(0, 0, 0, 0.28),
-    0 0 22px rgba(240, 173, 53, 0.38);
+    0 1px 0 rgba(0, 0, 0, 0.28),
+    0 4px 8px rgba(0, 0, 0, 0.16),
+    0 0 18px rgba(240, 173, 53, 0.32);
 }
 
 .keycap.special-key {
   background-image: var(--key-special);
+  background-position: center bottom;
 }
 
 .keycap.special-key:active,
@@ -348,6 +347,7 @@ small,
 .keycap.space-key:active,
 .keycap.space-key.pressed {
   background-image: var(--key-space);
+  background-position: center bottom;
 }
 
 .keycap.critical {
@@ -358,7 +358,8 @@ small,
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.85), 0 0 8px rgba(0, 0, 0, 0.75);
+  transform: translateY(-1px);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.85), 0 0 6px rgba(0, 0, 0, 0.72);
 }
 
 .combo-pill {
@@ -806,11 +807,11 @@ small,
   animation: shake 160ms linear;
 }
 
-body[data-keyboard="mechanical"] .keyboard {
+body[data-keyboard="mechanical"] .keyboard-base {
   filter: hue-rotate(18deg) saturate(1.12) brightness(1.02);
 }
 
-body[data-keyboard="rgb"] .keyboard {
+body[data-keyboard="rgb"] .keyboard-base {
   animation: rgbPulse 3s linear infinite;
   filter: saturate(1.22) brightness(1.06);
 }
@@ -821,7 +822,7 @@ body[data-keyboard="hacker"] {
   --cyan: #3dffbc;
 }
 
-body[data-keyboard="hacker"] .keyboard {
+body[data-keyboard="hacker"] .keyboard-base {
   filter: hue-rotate(95deg) saturate(1.25) brightness(0.96);
 }
 
@@ -830,11 +831,11 @@ body[data-keyboard="cursed"] {
   --green: #b66cff;
 }
 
-body[data-keyboard="cursed"] .keyboard {
+body[data-keyboard="cursed"] .keyboard-base {
   filter: hue-rotate(285deg) saturate(1.35) brightness(0.98);
 }
 
-body[data-keyboard="galaxy"] .keyboard {
+body[data-keyboard="galaxy"] .keyboard-base {
   filter: hue-rotate(210deg) saturate(1.42) brightness(1.04);
 }
 
@@ -912,24 +913,25 @@ body[data-keyboard="galaxy"] .keyboard {
     min-height: 340px;
   }
 
-  .keyboard {
+  .keyboard-wrapper {
     width: 100%;
-    padding: 10.4% 8.4% 13.2%;
-    gap: 2.25%;
-    transform: none;
   }
 
-  .keyboard::before {
-    display: none;
+  .keys-layer {
+    left: 4.2%;
+    top: 7%;
+    right: 4.2%;
+    bottom: 10%;
+    gap: 6px;
   }
 
   .key-row {
-    gap: 1%;
+    gap: 6px;
   }
 
   .keycap {
-    height: auto;
-    padding: 0 2px 5px;
+    height: 100%;
+    padding: 0 1px 2px;
     font-size: 8px;
   }
 
