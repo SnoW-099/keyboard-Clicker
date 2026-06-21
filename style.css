@@ -17,7 +17,7 @@
   --key-pressed: url("/Assets/clean/key-normal-pressed-clean.png");
   --key-special: url("/Assets/clean/key-special-clean.png");
   --key-special-pressed: url("/Assets/clean/key-special-pressed-clean.png");
-  --key-space: url("/Assets/clean/key-space-clean.png");
+  --key-space: url("/Assets/clean/key-space-full-clean.png");
   --keyboard-base: url("/Assets/clean/keyboard-base-panel-clean.png");
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 }
