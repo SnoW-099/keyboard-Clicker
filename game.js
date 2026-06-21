@@ -1,6 +1,6 @@
 const keyboardRows = [
   [
-    { code: "Backquote", label: "`" },
+    { code: "Escape", label: "Esc", wide: 1 },
     { code: "Digit1", label: "1" },
     { code: "Digit2", label: "2" },
     { code: "Digit3", label: "3" },
@@ -11,6 +11,8 @@ const keyboardRows = [
     { code: "Digit8", label: "8" },
     { code: "Digit9", label: "9" },
     { code: "Digit0", label: "0" },
+    { code: "F11", label: "F11" },
+    { code: "F12", label: "F12" },
     { code: "Backspace", label: "Back", wide: 2 }
   ],
   [
@@ -25,7 +27,8 @@ const keyboardRows = [
     { code: "KeyI", label: "I" },
     { code: "KeyO", label: "O" },
     { code: "KeyP", label: "P" },
-    { code: "Enter", label: "Enter", wide: 1.5 }
+    { code: "Backslash", label: "^`" },
+    { code: "Equal", label: "+*" }
   ],
   [
     { code: "CapsLock", label: "Caps", wide: 1.8 },
@@ -39,7 +42,8 @@ const keyboardRows = [
     { code: "KeyK", label: "K" },
     { code: "KeyL", label: "L" },
     { code: "Semicolon", label: ";" },
-    { code: "Quote", label: "'" }
+    { code: "Quote", label: "'" },
+    { code: "Enter", label: "Enter", wide: 1.5 }
   ],
   [
     { code: "ShiftLeft", label: "Shift", wide: 2.2 },
@@ -52,7 +56,7 @@ const keyboardRows = [
     { code: "KeyM", label: "M" },
     { code: "Comma", label: "," },
     { code: "Period", label: "." },
-    { code: "Slash", label: "/" },
+    { code: "Minus", label: "-_" },
     { code: "ShiftRight", label: "Shift", wide: 2.2 }
   ],
   [
@@ -256,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
   load();
   buildKeyboard();
   bind();
+  setView("play");
   render();
   setInterval(tick, 1000);
   setInterval(spawnEvent, 18000);
@@ -264,30 +269,100 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function buildKeyboard() {
   els.keyboard.innerHTML = "";
+  const layoutMap = {
+    Escape: { col: "1 / span 2", row: "1" },
+    Digit1: { col: "3 / span 2", row: "1" },
+    Digit2: { col: "5 / span 2", row: "1" },
+    Digit3: { col: "7 / span 2", row: "1" },
+    Digit4: { col: "9 / span 2", row: "1" },
+    Digit5: { col: "11 / span 2", row: "1" },
+    Digit6: { col: "13 / span 2", row: "1" },
+    Digit7: { col: "15 / span 2", row: "1" },
+    Digit8: { col: "17 / span 2", row: "1" },
+    Digit9: { col: "19 / span 2", row: "1" },
+    Digit0: { col: "21 / span 2", row: "1" },
+    F11: { col: "23 / span 2", row: "1" },
+    F12: { col: "25 / span 2", row: "1" },
+    Backspace: { col: "27 / span 5", row: "1" },
+    Tab: { col: "1 / span 4", row: "2" },
+    KeyQ: { col: "5 / span 2", row: "2" },
+    KeyW: { col: "7 / span 2", row: "2" },
+    KeyE: { col: "9 / span 2", row: "2" },
+    KeyR: { col: "11 / span 2", row: "2" },
+    KeyT: { col: "13 / span 2", row: "2" },
+    KeyY: { col: "15 / span 2", row: "2" },
+    KeyU: { col: "17 / span 2", row: "2" },
+    KeyI: { col: "19 / span 2", row: "2" },
+    KeyO: { col: "21 / span 2", row: "2" },
+    KeyP: { col: "23 / span 2", row: "2" },
+    Backslash: { col: "25 / span 2", row: "2" },
+    Equal: { col: "27 / span 2", row: "2" },
+    Quote: { col: "29 / span 2", row: "2" },
+    CapsLock: { col: "1 / span 5", row: "3" },
+    KeyA: { col: "6 / span 2", row: "3" },
+    KeyS: { col: "8 / span 2", row: "3" },
+    KeyD: { col: "10 / span 2", row: "3" },
+    KeyF: { col: "12 / span 2", row: "3" },
+    KeyG: { col: "14 / span 2", row: "3" },
+    KeyH: { col: "16 / span 2", row: "3" },
+    KeyJ: { col: "18 / span 2", row: "3" },
+    KeyK: { col: "20 / span 2", row: "3" },
+    KeyL: { col: "22 / span 2", row: "3" },
+    Semicolon: { col: "24 / span 2", row: "3" },
+    Enter: { col: "26 / span 6", row: "3" },
+    ShiftLeft: { col: "1 / span 4", row: "4" },
+    KeyZ: { col: "5 / span 2", row: "4" },
+    KeyX: { col: "7 / span 2", row: "4" },
+    KeyC: { col: "9 / span 2", row: "4" },
+    KeyV: { col: "11 / span 2", row: "4" },
+    KeyB: { col: "13 / span 2", row: "4" },
+    KeyN: { col: "15 / span 2", row: "4" },
+    KeyM: { col: "17 / span 2", row: "4" },
+    Comma: { col: "19 / span 2", row: "4" },
+    Period: { col: "21 / span 2", row: "4" },
+    Minus: { col: "23 / span 2", row: "4" },
+    ShiftRight: { col: "25 / span 7", row: "4" },
+    ControlLeft: { col: "1 / span 4", row: "5" },
+    AltLeft: { col: "5 / span 4", row: "5" },
+    Space: { col: "9 / span 14", row: "5" },
+    AltRight: { col: "23 / span 4", row: "5" },
+    ControlRight: { col: "27 / span 4", row: "5" }
+  };
+
   keyboardRows.forEach(row => {
-    const rowEl = document.createElement("div");
-    rowEl.className = "key-row";
     row.forEach(keyData => {
       const key = document.createElement("button");
       key.type = "button";
-      key.className = `keycap ${keyData.code === "Space" ? "space-key" : keyData.wide ? "special-key" : ""}`;
+      key.className = `keycap ${keyData.code === "Space" ? "space-key" : keyData.wide || keyData.code === "Escape" ? "special-key" : ""}`;
       if (keyData.wide === 1.4) key.classList.add("special-w14");
       if (keyData.wide === 1.5) key.classList.add("special-w15");
       if (keyData.wide === 1.8) key.classList.add("special-w18");
+      if (keyData.code === "Enter") key.classList.add("enter-key");
+      if (keyData.code === "Backspace") key.classList.add("back-key");
+      if (keyData.code === "ShiftLeft" || keyData.code === "ShiftRight") key.classList.add("shift-key");
+      const layout = layoutMap[keyData.code];
+
       key.dataset.code = keyData.code;
       key.style.setProperty("--span", keyData.wide || 1);
+      if (layout) {
+        key.style.gridColumn = layout.col;
+        key.style.gridRow = layout.row;
+      }
       key.innerHTML = `<span>${keyData.label}</span>`;
       key.addEventListener("pointerdown", event => {
         event.preventDefault();
         hit(keyData.code, key, event.clientX, event.clientY);
       });
-      rowEl.appendChild(key);
+      els.keyboard.appendChild(key);
     });
-    els.keyboard.appendChild(rowEl);
   });
 }
 
 function bind() {
+  document.querySelectorAll(".dock-item[data-view]").forEach(button => {
+    button.addEventListener("click", () => setView(button.dataset.view));
+  });
+
   window.addEventListener("keydown", event => {
     if (event.repeat) return;
     if (event.target.closest("button") && !event.target.classList.contains("keycap")) return;
@@ -308,6 +383,13 @@ function bind() {
       localStorage.removeItem("keyboard-clicker-save");
       location.reload();
     }
+  });
+}
+
+function setView(view) {
+  document.body.dataset.view = view;
+  document.querySelectorAll(".dock-item[data-view]").forEach(button => {
+    button.classList.toggle("active", button.dataset.view === view);
   });
 }
 
