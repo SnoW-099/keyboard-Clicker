@@ -296,74 +296,55 @@ small,
 }
 
 .keycap {
-  --unit: 48px;
-
-  width: calc(var(--span) * var(--unit));
-  height: 100%;
-
-  min-width: 0;
-  min-height: 0;
-  padding: 0 2px 4px;
-
-  border: 0;
+  background-image: none !important;
+  background: transparent;
+  aspect-ratio: 720 / 484;
+  width: calc(var(--span, 1) * var(--unit, 48px));
+  height: auto;
+  border-style: solid;
+  border-image-source: var(--key-normal);
+  border-image-slice: 31% 22% 0% 22% fill;
+  border-image-width: 31% 22% 0% 22%;
+  border-image-outset: 0;
+  border-image-repeat: stretch;
+  padding: 0;
   border-radius: 0;
-
-  color: #f6efe3;
-  appearance: none;
-  background-color: transparent;
-  background-image: var(--key-normal);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-
-  display: grid;
-  place-items: center;
-
-  font-weight: 950;
-  font-size: clamp(8px, 0.82vw, 12px);
-  text-transform: uppercase;
-  user-select: none;
-
-  image-rendering: pixelated;
-  position: relative;
-
-  outline: 0;
-  box-shadow: none;
-
-  transition: transform 80ms ease, filter 80ms ease, background 80ms ease;
-}
-
-.keycap:focus,
-.keycap:focus-visible {
-  outline: 0;
-  box-shadow: none;
-}
-
-.keycap:hover {
-  filter: brightness(1.16);
 }
 
 .keycap:active,
 .keycap.pressed {
-  transform: translateY(3px);
+  border-image-source: var(--key-pressed);
+  border-image-slice: 23% 22% 0% 22% fill;
   color: #fff2bf;
-  background-image: var(--key-pressed);
-  box-shadow: none;
+  transform: translateY(2px);
 }
 
 .keycap.special-key {
-  background-image: var(--key-special);
+  aspect-ratio: 720 / 620;
+  border-image-source: var(--key-special);
+  border-image-slice: 54% 22% 0% 22% fill;
+  border-image-width: 54% 22% 0% 22%;
 }
 
 .keycap.special-key:active,
 .keycap.special-key.pressed {
-  background-image: var(--key-special-pressed);
+  border-image-source: var(--key-special-pressed);
+  border-image-slice: 44% 22% 0% 22% fill;
+  border-image-width: 44% 22% 0% 22%;
+  transform: translateY(2px);
 }
 
-.keycap.space-key,
+.keycap.space-key {
+  aspect-ratio: 2244 / 701;
+  border-image-source: var(--key-space);
+  border-image-slice: 17% 5% 0% 5% fill;
+  border-image-width: 17% 5% 0% 5%;
+}
+
 .keycap.space-key:active,
 .keycap.space-key.pressed {
-  background-image: var(--key-space);
+  transform: translateY(2px);
+  filter: brightness(0.92);
 }
 
 .keycap.critical {
@@ -371,9 +352,6 @@ small,
 }
 
 .keycap span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 90%;
   position: relative;
   z-index: 1;
   transform: translateY(-2px);
