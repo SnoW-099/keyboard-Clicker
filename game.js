@@ -271,6 +271,7 @@ function buildKeyboard() {
       const key = document.createElement("button");
       key.type = "button";
       key.className = `keycap ${keyData.code === "Space" ? "space-key" : keyData.wide ? "special-key" : ""}`;
+      if (keyData.wide === 1.4) key.classList.add("special-w14");
       key.dataset.code = keyData.code;
       key.style.setProperty("--span", keyData.wide || 1);
       key.innerHTML = `<span>${keyData.label}</span>`;

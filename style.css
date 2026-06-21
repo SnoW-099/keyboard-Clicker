@@ -17,6 +17,8 @@
   --key-pressed: url("/Assets/clean/key-normal-pressed-clean.png");
   --key-special: url("/Assets/clean/key-special-full-clean.png");
   --key-special-pressed: url("/Assets/clean/key-special-pressed-full-clean.png");
+  --key-special-14: url("/Assets/clean/key-special-14-full-clean.png");
+  --key-special-pressed-14: url("/Assets/clean/key-special-pressed-14-full-clean.png");
   --key-space: url("/Assets/clean/key-space-full-clean.png");
   --keyboard-base: url("/Assets/clean/keyboard-base-panel-clean.png");
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -326,12 +328,21 @@ small,
   border-image-width: 60% 22% 8% 22%;
 }
 
+.keycap.special-key.special-w14 {
+  border-image-source: var(--key-special-14);
+}
+
 .keycap.special-key:active,
 .keycap.special-key.pressed {
   border-image-source: var(--key-special-pressed);
   border-image-slice: 44% 22% 0% 22% fill;
   border-image-width: 60% 22% 8% 22%;
   transform: translateY(2px);
+}
+
+.keycap.special-key.special-w14:active,
+.keycap.special-key.special-w14.pressed {
+  border-image-source: var(--key-special-pressed-14);
 }
 
 .keycap.space-key {
