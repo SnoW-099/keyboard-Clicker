@@ -327,9 +327,16 @@ small,
   image-rendering: pixelated;
   position: relative;
 
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.14);
+  outline: 0;
+  box-shadow: none;
 
-  transition: transform 80ms ease, filter 80ms ease, background 80ms ease, box-shadow 80ms ease;
+  transition: transform 80ms ease, filter 80ms ease, background 80ms ease;
+}
+
+.keycap:focus,
+.keycap:focus-visible {
+  outline: 0;
+  box-shadow: none;
 }
 
 .keycap:hover {
@@ -341,7 +348,7 @@ small,
   transform: translateY(3px);
   color: #fff2bf;
   background-image: var(--key-pressed);
-  box-shadow: 0 0 14px rgba(240, 173, 53, 0.22);
+  box-shadow: none;
 }
 
 .keycap.special-key {
