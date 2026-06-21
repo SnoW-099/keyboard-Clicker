@@ -298,13 +298,13 @@ small,
 .keycap {
   background-image: none !important;
   background: transparent;
-  aspect-ratio: 720 / 580;
+  aspect-ratio: 720 / 700;
   width: calc(var(--span, 1) * var(--unit, 48px));
   height: auto;
   border-style: solid;
   border-image-source: var(--key-normal);
-  border-image-slice: 38% 22% 5% 22% fill;
-  border-image-width: 38% 22% 5% 22%;
+  border-image-slice: 42% 22% 8% 22% fill;
+  border-image-width: 42% 22% 8% 22%;
   border-image-outset: 0;
   border-image-repeat: stretch;
   padding: 0;
@@ -320,10 +320,10 @@ small,
 }
 
 .keycap.special-key {
-  aspect-ratio: 720 / 700;
+  aspect-ratio: 720 / 820;
   border-image-source: var(--key-special);
-  border-image-slice: 58% 22% 5% 22% fill;
-  border-image-width: 58% 22% 5% 22%;
+  border-image-slice: 60% 22% 8% 22% fill;
+  border-image-width: 60% 22% 8% 22%;
 }
 
 .keycap.special-key:active,
@@ -335,7 +335,7 @@ small,
 }
 
 .keycap.space-key {
-  aspect-ratio: 2244 / 701;
+  aspect-ratio: 2244 / 600;
   border-image-source: var(--key-space);
   border-image-slice: 17% 5% 0% 5% fill;
   border-image-width: 17% 5% 0% 5%;
@@ -354,7 +354,7 @@ small,
 .keycap span {
   position: relative;
   z-index: 1;
-  transform: translateY(-20%);
+  transform: translateY(-30%);
   color: #fff8dc;
   -webkit-text-stroke: 0.35px rgba(9, 10, 18, 0.86);
   text-shadow:
