@@ -137,7 +137,12 @@ button:focus-visible {
 
 .score-card {
   text-align: center;
-  padding: 12px 20px 14px;
+  padding: 12px 20px 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 60%),
+    rgba(8, 7, 16, 0.82);
+  border-bottom: 1px solid rgba(242, 189, 63, 0.2);
+  position: relative;
 }
 
 .score-card span,
@@ -153,20 +158,37 @@ small,
 .score-card span,
 .score-card small {
   display: block;
-  font-weight: 950;
   text-transform: uppercase;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.8);
+}
+
+.score-card span {
+  color: var(--gold);
+  opacity: 0.75;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.score-card small {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
 }
 
 .score-card strong {
   display: block;
-  margin: 4px 0;
-  color: #fff8e8;
-  font-size: clamp(58px, 6vw, 104px);
+  margin: 4px 0 6px;
+  color: #ffffff;
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 900;
   line-height: 0.92;
+  letter-spacing: -0.02em;
   text-shadow:
-    0 7px 0 rgba(0, 0, 0, 0.56),
-    0 0 46px rgba(242, 189, 63, 0.28);
+    0 4px 0 rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(242, 189, 63, 0.15),
+    0 0 80px rgba(59, 91, 255, 0.08);
 }
 
 .compact-card {
@@ -212,6 +234,11 @@ small,
   padding: 14px;
 }
 
+.keyboard-status {
+  padding: 10px 14px 14px;
+  border-bottom: 1px solid rgba(242, 189, 63, 0.12);
+}
+
 .shop-card {
   overflow: auto;
 }
@@ -242,11 +269,22 @@ h2 {
   line-height: 1.35;
 }
 
+.keyboard-status .card-title span {
+  display: block;
+  margin: 2px 0 6px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+  text-shadow: 0 0 12px rgba(242, 189, 63, 0.3);
+}
+
 .stars {
-  margin-top: 12px;
-  color: var(--gold-2);
-  font-size: 18px;
-  text-shadow: 0 0 14px rgba(242, 189, 63, 0.28);
+  margin-top: 6px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 12px rgba(242, 189, 63, 0.3);
 }
 
 .meter {
@@ -275,20 +313,20 @@ h2 {
   display: grid;
   place-items: center;
   min-height: clamp(390px, 43vw, 560px);
-  border-radius: 8px;
-  border: 2px solid rgba(242, 189, 63, 0.28);
+  border-radius: 12px;
+  border: 1.5px solid rgba(242, 189, 63, 0.2);
   background:
-    radial-gradient(ellipse at center, rgba(242, 189, 63, 0.12), transparent 45%),
-    radial-gradient(circle at 50% 18%, rgba(123, 220, 255, 0.1), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.012)),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
-  background-size: auto, auto, auto, 42px 42px, 42px 42px;
+    radial-gradient(ellipse at 50% 0%, rgba(59, 91, 255, 0.08), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(242, 189, 63, 0.06), transparent 50%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    rgba(6, 5, 14, 0.92);
+  background-size: auto, auto, 32px 32px, 32px 32px;
   overflow: hidden;
   box-shadow:
-    inset 0 0 100px rgba(0, 0, 0, 0.52),
-    inset 0 0 0 1px rgba(123, 220, 255, 0.24),
-    0 22px 58px rgba(0, 0, 0, 0.45);
+    inset 0 0 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(59, 91, 255, 0.15),
+    0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .keyboard-wrapper {
@@ -401,19 +439,23 @@ h2 {
 
 .combo-pill {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 14px;
+  right: 14px;
   z-index: 4;
-  padding: 9px 13px;
-  border-radius: 7px;
-  color: #fff6d4;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: #111;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 48%),
-    linear-gradient(180deg, rgba(94, 73, 16, 0.92), rgba(34, 26, 10, 0.92));
-  border: 1px solid rgba(242, 189, 63, 0.7);
-  font-weight: 950;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.74);
-  box-shadow: 0 5px 0 rgba(78, 45, 5, 0.62), 0 0 18px rgba(242, 189, 63, 0.16);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 45%),
+    linear-gradient(135deg, #ffe066, #f0ad35);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 4px 0 rgba(96, 59, 5, 0.7),
+    0 0 20px rgba(240, 173, 53, 0.3);
 }
 
 .lower-board {
@@ -483,7 +525,7 @@ body[data-view="keyboards"] .parts {
 .build-card button,
 .buy,
 .rebirth-card button {
-  min-height: 36px;
+  min-height: 34px;
   border-radius: 6px;
   color: #151002;
   background:
@@ -496,9 +538,9 @@ body[data-view="keyboards"] .parts {
 .part-card button:disabled,
 .buy:disabled,
 .rebirth-card button:disabled {
-  color: rgba(255, 255, 255, 0.5);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.11), transparent), #31323d;
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
   cursor: not-allowed;
 }
 
@@ -527,29 +569,42 @@ body[data-view="keyboards"] .parts {
 }
 
 .shop-item {
-  min-height: 82px;
+  min-height: 64px;
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) auto;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
   align-items: center;
   gap: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(242, 189, 63, 0.22);
+  padding: 8px 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   background:
-    linear-gradient(90deg, rgba(242, 189, 63, 0.075), transparent 38%),
-    linear-gradient(180deg, rgba(34, 34, 54, 0.96), rgba(9, 10, 18, 0.96));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 -4px 0 rgba(0, 0, 0, 0.3), 0 9px 16px rgba(0, 0, 0, 0.16);
+    linear-gradient(90deg, rgba(242, 189, 63, 0.04), transparent 40%),
+    rgba(14, 12, 26, 0.7);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.shop-item:hover {
+  border-color: rgba(242, 189, 63, 0.28);
+  background:
+    linear-gradient(90deg, rgba(242, 189, 63, 0.08), transparent 40%),
+    rgba(18, 16, 32, 0.8);
 }
 
 .shop-icon {
-  width: 48px;
-  height: 48px;
-  font-size: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 11px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02)),
+    rgba(30, 25, 55, 0.9);
+  border: 1px solid rgba(242, 189, 63, 0.2);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
 }
 
 .shop-icon img {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   image-rendering: pixelated;
 }
@@ -560,25 +615,43 @@ body[data-view="keyboards"] .parts {
 }
 
 .shop-item strong {
-  color: #fff1bf;
-  font-size: 14px;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72);
+  color: #fff8e6;
+  font-size: 13px;
+  font-weight: 800;
+  text-shadow: none;
 }
 
 .shop-item small {
-  margin-top: 3px;
-  color: #afa68f;
-  font-size: 12px;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 11px;
   line-height: 1.25;
 }
 
 .buy {
-  min-width: 80px;
+  min-width: 72px;
+  min-height: 34px;
   padding: 0 10px;
+  color: #0a1a08;
+  font-size: 12px;
+  font-weight: 900;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.36), transparent 45%),
-    linear-gradient(180deg, #a2ef79, #57aa44);
-  box-shadow: 0 4px 0 #285523, 0 8px 14px rgba(0, 0, 0, 0.26);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 45%),
+    linear-gradient(180deg, #6ee76e, #3aaa3a);
+  box-shadow:
+    0 3px 0 #1a5a1a,
+    0 0 12px rgba(74, 222, 128, 0.2);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.buy:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 #1a5a1a, 0 0 18px rgba(74, 222, 128, 0.3);
+}
+
+.buy:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #1a5a1a;
 }
 
 .rebirth-head img {
@@ -591,19 +664,52 @@ body[data-view="keyboards"] .parts {
 
 .rebirth-card button {
   width: 100%;
-  margin-top: 12px;
+  min-height: 44px;
+  margin-top: 10px;
+  color: #12080a;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 45%),
+    linear-gradient(135deg, #ffe066, #f0ad35);
+  box-shadow:
+    0 4px 0 rgba(96, 59, 5, 0.8),
+    0 0 20px rgba(240, 173, 53, 0.15);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+
+.rebirth-card button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 rgba(96, 59, 5, 0.8), 0 0 28px rgba(240, 173, 53, 0.25);
+}
+
+.rebirth-card button:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(96, 59, 5, 0.8);
 }
 
 .stats {
   display: grid;
   grid-template-columns: 1fr auto;
-  margin-top: 12px;
-  row-gap: 9px;
+  gap: 6px 12px;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(242, 189, 63, 0.1);
+}
+
+.stats span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .stats b {
-  color: #fff1bf;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72);
+  color: #fff8dc;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: right;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
 
 .build-board {
@@ -740,41 +846,56 @@ body[data-view="keyboards"] .parts {
   position: sticky;
   bottom: 0;
   z-index: 20;
-  min-height: 72px;
+  min-height: 56px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-  padding: 8px;
-  background:
-    linear-gradient(180deg, rgba(242, 189, 63, 0.2), transparent 5px),
-    linear-gradient(180deg, rgba(18, 17, 30, 0.96), rgba(8, 9, 14, 0.98));
-  border-top: 2px solid rgba(242, 189, 63, 0.34);
-  box-shadow: 0 -16px 44px rgba(0, 0, 0, 0.48);
-  backdrop-filter: blur(14px);
+  gap: 0;
+  padding: 0;
+  background: rgba(6, 5, 14, 0.96);
+  border-top: 1px solid rgba(242, 189, 63, 0.25);
+  box-shadow: 0 -14px 38px rgba(0, 0, 0, 0.46);
+  backdrop-filter: blur(20px);
 }
 
 .dock-item {
-  border-radius: 7px;
-  color: #c9c0a9;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 48%),
-    #171724;
-  border: 1px solid rgba(242, 189, 63, 0.16);
-  font-weight: 900;
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.36);
+  position: relative;
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+  color: var(--muted);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color 0.15s, background 0.15s;
+}
+
+.dock-item::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.15s;
 }
 
 .dock-item.active,
 .dock-item:hover {
-  color: var(--text);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 48%),
-    linear-gradient(180deg, rgba(123, 220, 255, 0.24), rgba(242, 189, 63, 0.16));
-  border-color: rgba(242, 189, 63, 0.48);
+  color: #fff8e6;
+  background: rgba(242, 189, 63, 0.06);
+}
+
+.dock-item.active::after,
+.dock-item:hover::after {
+  transform: scaleX(1);
 }
 
 .dock-item.danger {
-  color: #ffb1b1;
+  color: var(--red);
 }
 
 .hidden-action {
@@ -790,30 +911,38 @@ body[data-view="keyboards"] .parts {
 
 .float {
   z-index: 4;
-  color: var(--gold);
-  font-weight: 950;
-  font-size: 28px;
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  color: #ffe066;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(240, 173, 53, 0.6);
   animation: floatUp 780ms ease-out forwards;
 }
 
 .float.critical {
-  color: #fff1a8;
-  font-size: 34px;
+  color: #fff;
+  font-size: 38px;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(255, 220, 80, 0.8),
+    0 0 60px rgba(240, 173, 53, 0.4);
 }
 
 .spark {
   z-index: 3;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--gold);
+  background: #ffe066;
+  box-shadow: 0 0 6px rgba(240, 173, 53, 0.8);
   animation: spark 640ms ease-out forwards;
 }
 
 .spark.critical {
-  background: #fff1a8;
-  box-shadow: 0 0 14px var(--gold);
+  background: #fff;
+  box-shadow: 0 0 12px rgba(255, 220, 80, 1);
 }
 
 .event-chip {
@@ -908,15 +1037,16 @@ body[data-view="keyboards"] .parts {
 }
 
 .toast {
-  padding: 12px 14px;
+  padding: 10px 14px;
   border-radius: 7px;
-  color: #101010;
+  color: #0a0a14;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 45%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 45%),
     var(--gold);
-  border: 1px solid rgba(19, 20, 38, 0.8);
-  box-shadow: var(--shadow);
-  font-weight: 900;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 4px 0 rgba(96, 59, 5, 0.5), var(--shadow);
   animation: toast 3.2s ease forwards;
 }
 
