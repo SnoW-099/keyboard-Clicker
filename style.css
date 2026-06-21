@@ -276,10 +276,10 @@ small,
   position: absolute;
   z-index: 2;
 
-  left: 5.5%;
-  right: 5.5%;
-  top: 18%;
-  bottom: 11%;
+  left: 4.8%;
+  right: 4.8%;
+  top: 15%;
+  bottom: 8%;
 
   display: flex;
   flex-direction: column;
@@ -296,7 +296,7 @@ small,
 }
 
 .keycap {
-  --unit: 45px;
+  --unit: 48px;
 
   width: calc(var(--span) * var(--unit));
   height: 100%;
@@ -309,6 +309,8 @@ small,
   border-radius: 0;
 
   color: #f6efe3;
+  appearance: none;
+  background-color: transparent;
   background-image: var(--key-normal);
   background-size: 100% 100%;
   background-repeat: no-repeat;
