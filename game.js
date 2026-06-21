@@ -66,7 +66,7 @@ const keyboardRows = [
 
 const upgrades = [
   { id: "fingers", icon: "F1", name: "Dedos rapidos", desc: "+1 por tecla", bonus: 1, base: 25, owned: 0 },
-  { id: "switches", icon: "SW", name: "Switches mecanicos", desc: "+6 por tecla", bonus: 6, base: 180, owned: 0 },
+  { id: "switches", icon: "IMG:upgrade-mechanical-switch.png", name: "Switches mecanicos", desc: "+6 por tecla", bonus: 6, base: 180, owned: 0 },
   { id: "rgb", icon: "RGB", name: "RGB gamer", desc: "+28 por tecla", bonus: 28, base: 1200, owned: 0 },
   { id: "premium", icon: "PRO", name: "Teclado premium", desc: "+140 por tecla", bonus: 140, base: 9000, owned: 0 },
   { id: "mainframe", icon: "CPU", name: "Superordenador", desc: "+700 por tecla", bonus: 700, base: 68000, owned: 0 }
@@ -270,7 +270,7 @@ function buildKeyboard() {
     row.forEach(keyData => {
       const key = document.createElement("button");
       key.type = "button";
-      key.className = "keycap";
+      key.className = `keycap ${keyData.code === "Space" ? "space-key" : keyData.wide ? "special-key" : ""}`;
       key.dataset.code = keyData.code;
       key.style.setProperty("--span", keyData.wide || 1);
       key.innerHTML = `<span>${keyData.label}</span>`;
@@ -531,15 +531,15 @@ function rebirth() {
 
 function spawnEvent() {
   const labels = [
-    { text: "Tecla dorada", reward: 900 },
-    { text: "Cofre de switches", reward: 2200 },
-    { text: "Lluvia de teclas", reward: 5400 }
+    { text: "Tecla dorada", reward: 900, asset: "powerup-golden-key.png" },
+    { text: "Cofre de switches", reward: 2200, asset: "upgrade-mechanical-switch.png" },
+    { text: "Lluvia de teclas", reward: 5400, asset: "powerup-key-rain.png" }
   ];
   const event = labels[Math.floor(Math.random() * labels.length)];
   const chip = document.createElement("button");
   chip.className = "event-chip";
   chip.type = "button";
-  chip.textContent = event.text;
+  chip.innerHTML = `<img src="/Assets/${event.asset}" alt="" /><span>${event.text}</span>`;
   chip.style.left = `${12 + Math.random() * 68}%`;
   chip.style.top = `${18 + Math.random() * 54}%`;
   chip.addEventListener("click", () => {
@@ -631,10 +631,17 @@ function cardHtml(card, pickable) {
 function shopHtml(item, fn, meta = item.desc) {
   const price = cost(item);
   return `<article class="shop-item">
-    <span class="shop-icon">${item.icon}</span>
+    <span class="shop-icon">${iconHtml(item.icon)}</span>
     <div><strong>${item.name}</strong><small>${meta} - Nv ${item.owned}</small></div>
     <button class="buy" type="button" onclick="${fn}('${item.id}')" ${state.scrap >= price ? "" : "disabled"}>${fmt(price)}</button>
   </article>`;
+}
+
+function iconHtml(icon) {
+  if (icon.startsWith("IMG:")) {
+    return `<img src="/Assets/${icon.replace("IMG:", "")}" alt="" />`;
+  }
+  return icon;
 }
 
 function floatText(text, x, y, critical = false) {
