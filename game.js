@@ -80,21 +80,142 @@ const machines = [
   { id: "ai", icon: "AI", name: "IA", rate: 1500, base: 180000, owned: 0 }
 ];
 
-const parts = [
-  { icon: "KB", name: "Teclado de oficina", at: 0 },
-  { icon: "ME", name: "Mecanico azul", at: 500 },
-  { icon: "RG", name: "RGB gamer", at: 2500 },
-  { icon: "OP", name: "Optico", at: 12000 },
-  { icon: "CU", name: "Cuantico", at: 60000 },
-  { icon: "GA", name: "Galaxia", at: 240000 }
+const keyboards = [
+  {
+    id: "office",
+    icon: "KB",
+    name: "Teclado de oficina",
+    rarity: "Comun",
+    unlockAt: 0,
+    className: "skin-office",
+    passive: "Estable: +5% a todos los clics.",
+    clickMult: 1.05,
+    autoMult: 1,
+    comboEase: 0,
+    favorite: "KeyE",
+    favoriteMult: 1.1
+  },
+  {
+    id: "mechanical",
+    icon: "ME",
+    name: "Mecanico azul",
+    rarity: "Raro",
+    unlockAt: 500,
+    className: "skin-mechanical",
+    passive: "Clicky: combos x2 empiezan antes y Enter/Shift pegan mas fuerte.",
+    clickMult: 1.18,
+    autoMult: 1,
+    comboEase: 2,
+    favorite: "Enter",
+    favoriteMult: 1.6
+  },
+  {
+    id: "rgb",
+    icon: "RG",
+    name: "RGB gamer",
+    rarity: "Epico",
+    unlockAt: 2500,
+    className: "skin-rgb",
+    passive: "Overdrive: cada combo alto gana brillo y +35% por tecla.",
+    clickMult: 1.15,
+    autoMult: 1.1,
+    comboEase: 1,
+    favorite: "Space",
+    favoriteMult: 1.45
+  },
+  {
+    id: "hacker",
+    icon: "HK",
+    name: "Hacker verde",
+    rarity: "Epico",
+    unlockAt: 12000,
+    className: "skin-hacker",
+    passive: "Secuencia: alternar letras y numeros aumenta el valor.",
+    clickMult: 1.25,
+    autoMult: 1.25,
+    comboEase: 0,
+    favorite: "Digit0",
+    favoriteMult: 1.7
+  },
+  {
+    id: "cursed",
+    icon: "??",
+    name: "Teclado roto",
+    rarity: "Corrupto",
+    unlockAt: 60000,
+    className: "skin-cursed",
+    passive: "Riesgo: 15% de fallo, 12% de golpe critico x8.",
+    clickMult: 1.4,
+    autoMult: 0.9,
+    comboEase: -1,
+    favorite: "Backspace",
+    favoriteMult: 2.2
+  },
+  {
+    id: "galaxy",
+    icon: "GA",
+    name: "Galaxia",
+    rarity: "Legendario",
+    unlockAt: 240000,
+    className: "skin-galaxy",
+    passive: "Constelacion: Space repite el ultimo golpe y auto x2.",
+    clickMult: 1.8,
+    autoMult: 2,
+    comboEase: 2,
+    favorite: "Space",
+    favoriteMult: 2
+  }
 ];
 
-const yards = [
-  { name: "Teclado de oficina", at: 0, bonus: 0 },
-  { name: "Teclado mecanico", at: 8, bonus: 0.15 },
-  { name: "RGB gamer", at: 18, bonus: 0.35 },
-  { name: "Teclado optico", at: 34, bonus: 0.75 },
-  { name: "Teclado legendario", at: 55, bonus: 1.4 }
+const cardPool = [
+  {
+    id: "clicker-joker",
+    name: "Clicker Joker",
+    rarity: "common",
+    tag: "COMUN",
+    desc: "Cada 7 pulsaciones, la siguiente tecla vale x3.",
+    effect: "septimo"
+  },
+  {
+    id: "spacebar-titan",
+    name: "Spacebar Titan",
+    rarity: "rare",
+    tag: "RARO",
+    desc: "Space vale x2.5 adicional.",
+    effect: "space"
+  },
+  {
+    id: "combo-dealer",
+    name: "Combo Dealer",
+    rarity: "rare",
+    tag: "RARO",
+    desc: "Los combos suben un escalon antes.",
+    effect: "combo"
+  },
+  {
+    id: "ghost-typist",
+    name: "Ghost Typist",
+    rarity: "epic",
+    tag: "EPICO",
+    desc: "El ultimo golpe se repite al 18% cada segundo.",
+    effect: "ghost"
+  },
+  {
+    id: "rgb-overdrive",
+    name: "RGB Overdrive",
+    rarity: "epic",
+    tag: "EPICO",
+    desc: "Con combo x4 o mas, todas las teclas ganan +60%.",
+    effect: "rgb"
+  },
+  {
+    id: "broken-firmware",
+    name: "Broken Firmware",
+    rarity: "legendary",
+    tag: "LEGEND",
+    desc: "10% de probabilidad de critico x10.",
+    effect: "crit"
+  }
 ];
 
 const state = {
@@ -109,7 +230,14 @@ const state = {
   lastClick: 0,
   rebirths: 0,
   shards: 0,
-  sound: true
+  sound: true,
+  equippedKeyboard: "office",
+  ownedKeyboards: ["office"],
+  activeCards: [],
+  cardChoices: [],
+  lastCode: "",
+  clickCount: 0,
+  lastGain: 0
 };
 
 const $ = id => document.getElementById(id);
@@ -122,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "scrap", "perClick", "scrapZone", "keyboard", "combo", "eventLayer", "collectionCount",
     "parts", "rebirths", "globalMultiplier", "rebirthBar", "rebirthText", "rebirthButton",
     "lifetime", "manualClicks", "autoRate", "bestCombo", "machineCount", "machineList",
-    "toasts", "soundButton", "resetButton"
+    "toasts", "soundButton", "resetButton", "cardChoices", "activeCards", "deckCount"
   ].forEach(id => els[id] = $(id));
 
   load();
@@ -187,27 +315,55 @@ function findKey(code) {
 function hit(code, key, x, y) {
   const now = Date.now();
   const gap = now - state.lastClick;
+  const board = equippedKeyboard();
   state.lastClick = now;
-  state.combo = gap < 190 ? Math.min(30, state.combo + 1) : gap < 360 ? Math.min(30, state.combo + 0.35) : 1;
+  state.combo = gap < 190 ? Math.min(30, state.combo + 1 + Math.max(0, board.comboEase) * 0.15) : gap < 360 ? Math.min(30, state.combo + 0.35) : 1;
   state.bestCombo = Math.max(state.bestCombo, Math.floor(state.combo));
+  state.clickCount += 1;
 
-  const gained = Math.ceil(state.perClick * comboMultiplier() * globalMultiplier() * yard().multiplier * keyValue(code));
-  addScrap(gained);
+  const result = calculateGain(code);
+  addScrap(result.gained);
+  state.lastGain = result.gained;
   state.manualClicks += 1;
   state.xp += 5 + Math.floor(state.combo);
   levelUp();
+  unlockKeyboards();
 
   key.classList.add("pressed");
-  setTimeout(() => key.classList.remove("pressed"), 110);
+  if (result.critical) key.classList.add("critical");
+  setTimeout(() => key.classList.remove("pressed", "critical"), 120);
   if (state.combo >= 14) {
     els.scrapZone.classList.add("shake");
     setTimeout(() => els.scrapZone.classList.remove("shake"), 180);
   }
 
-  floatText(`+${fmt(gained)}`, x, y);
-  sparks(x, y);
-  keySound(code);
+  floatText(result.miss ? "MISS" : `+${fmt(result.gained)}`, x, y, result.critical);
+  sparks(x, y, result.critical);
+  keySound(code, board);
+  state.lastCode = code;
   render();
+}
+
+function calculateGain(code) {
+  const board = equippedKeyboard();
+  if (board.id === "cursed" && Math.random() < 0.15) return { gained: 0, miss: true, critical: false };
+
+  let multiplier = keyValue(code) * board.clickMult * comboMultiplier() * globalMultiplier() * cardMultiplier(code);
+  if (code === board.favorite) multiplier *= board.favoriteMult;
+  if (board.id === "hacker" && state.lastCode && codeType(state.lastCode) !== codeType(code)) multiplier *= 1.55;
+  if (board.id === "rgb" && comboMultiplier() >= 4) multiplier *= 1.35;
+  if (board.id === "galaxy" && code === "Space" && state.lastGain > 0) {
+    addScrap(Math.ceil(state.lastGain * 0.5));
+  }
+
+  let critical = false;
+  const critChance = hasCard("broken-firmware") ? 0.1 : board.id === "cursed" ? 0.12 : 0;
+  if (critChance > 0 && Math.random() < critChance) {
+    multiplier *= hasCard("broken-firmware") ? 10 : 8;
+    critical = true;
+  }
+
+  return { gained: Math.ceil(state.perClick * multiplier), miss: false, critical };
 }
 
 function keyValue(code) {
@@ -217,17 +373,36 @@ function keyValue(code) {
   return 1;
 }
 
+function cardMultiplier(code) {
+  let mult = 1;
+  if (hasCard("spacebar-titan") && code === "Space") mult *= 2.5;
+  if (hasCard("rgb-overdrive") && comboMultiplier() >= 4) mult *= 1.6;
+  if (hasCard("clicker-joker") && state.clickCount > 0 && state.clickCount % 7 === 0) mult *= 3;
+  return mult;
+}
+
+function codeType(code) {
+  if (code.includes("Digit")) return "number";
+  if (code.includes("Key")) return "letter";
+  return "special";
+}
+
 function addScrap(amount) {
   state.scrap += amount;
   state.lifetime += amount;
 }
 
 function levelUp() {
+  let leveled = false;
   while (state.xp >= xpNeed()) {
     state.xp -= xpNeed();
     state.level += 1;
+    leveled = true;
+  }
+  if (leveled) {
     toast(`Nivel ${state.level}`);
     beep(640, 0.12, "triangle");
+    if (state.level % 3 === 0 && state.cardChoices.length === 0) dealCards();
   }
 }
 
@@ -236,9 +411,10 @@ function xpNeed() {
 }
 
 function comboMultiplier() {
-  if (state.combo >= 24) return 8;
-  if (state.combo >= 15) return 4;
-  if (state.combo >= 7) return 2;
+  const ease = equippedKeyboard().comboEase + (hasCard("combo-dealer") ? 2 : 0);
+  if (state.combo >= 24 - ease) return 8;
+  if (state.combo >= 15 - ease) return 4;
+  if (state.combo >= 7 - ease) return 2;
   return 1;
 }
 
@@ -246,16 +422,20 @@ function globalMultiplier() {
   return 1 + state.shards * 0.08;
 }
 
-function yard() {
-  let current = yards[0];
-  yards.forEach(y => {
-    if (state.level >= y.at) current = y;
-  });
-  return { ...current, multiplier: 1 + current.bonus };
+function equippedKeyboard() {
+  return keyboards.find(board => board.id === state.equippedKeyboard) || keyboards[0];
+}
+
+function hasCard(id) {
+  return state.activeCards.includes(id);
 }
 
 function autoRate() {
   return machines.reduce((sum, item) => sum + item.rate * item.owned, 0);
+}
+
+function autoMultiplier() {
+  return equippedKeyboard().autoMult * globalMultiplier() * (hasCard("ghost-typist") ? 1.18 : 1);
 }
 
 function cost(item) {
@@ -285,9 +465,45 @@ function buyMachine(id) {
   render();
 }
 
+function equipKeyboard(id) {
+  if (!state.ownedKeyboards.includes(id)) return;
+  state.equippedKeyboard = id;
+  toast(`${equippedKeyboard().name} equipado`);
+  render();
+  save();
+}
+
+function unlockKeyboards() {
+  keyboards.forEach(board => {
+    if (state.lifetime >= board.unlockAt && !state.ownedKeyboards.includes(board.id)) {
+      state.ownedKeyboards.push(board.id);
+      toast(`Nuevo teclado: ${board.name}`);
+    }
+  });
+}
+
+function dealCards() {
+  const available = cardPool.filter(card => !state.activeCards.includes(card.id));
+  state.cardChoices = shuffle(available).slice(0, 3).map(card => card.id);
+  if (state.cardChoices.length > 0) toast("Elige una carta de build");
+}
+
+function pickCard(id) {
+  if (!state.cardChoices.includes(id)) return;
+  state.activeCards.push(id);
+  state.cardChoices = [];
+  const card = cardPool.find(item => item.id === id);
+  toast(`Carta activa: ${card.name}`);
+  beep(560, 0.14, "triangle");
+  render();
+  save();
+}
+
 function tick() {
-  const amount = Math.ceil(autoRate() * globalMultiplier() * yard().multiplier);
+  const amount = Math.ceil(autoRate() * autoMultiplier());
   if (amount > 0) addScrap(amount);
+  if (hasCard("ghost-typist") && state.lastGain > 0) addScrap(Math.ceil(state.lastGain * 0.18));
+  unlockKeyboards();
   render();
 }
 
@@ -301,6 +517,10 @@ function rebirth() {
   state.level = 1;
   state.xp = 0;
   state.combo = 1;
+  state.cardChoices = [];
+  state.activeCards = [];
+  state.equippedKeyboard = "office";
+  state.ownedKeyboards = ["office"];
   upgrades.forEach(item => item.owned = 0);
   machines.forEach(item => item.owned = 0);
   toast(`Renacimiento: +${earned} chips`);
@@ -325,10 +545,11 @@ function spawnEvent() {
   chip.addEventListener("click", () => {
     const reward = Math.ceil(event.reward * globalMultiplier());
     addScrap(reward);
-    floatText(`+${fmt(reward)}`, window.innerWidth / 2, window.innerHeight / 2);
+    floatText(`+${fmt(reward)}`, window.innerWidth / 2, window.innerHeight / 2, true);
     toast(event.text);
     beep(700, 0.12, "triangle");
     chip.remove();
+    unlockKeyboards();
     render();
   });
   els.eventLayer.appendChild(chip);
@@ -336,15 +557,17 @@ function spawnEvent() {
 }
 
 function render() {
+  const board = equippedKeyboard();
+  document.body.dataset.keyboard = board.id;
   els.scrap.textContent = fmt(state.scrap);
-  els.perClick.textContent = fmt(Math.ceil(state.perClick * comboMultiplier() * globalMultiplier() * yard().multiplier));
+  els.perClick.textContent = fmt(Math.ceil(state.perClick * comboMultiplier() * globalMultiplier() * board.clickMult));
   els.level.textContent = state.level;
   els.xpBar.style.width = `${Math.min(100, state.xp / xpNeed() * 100)}%`;
   els.xpText.textContent = `${fmt(state.xp)} / ${fmt(xpNeed())} reputacion`;
   els.combo.textContent = `Combo x${comboMultiplier()}`;
-  els.yardTier.textContent = yard().name;
-  els.yardBonus.textContent = `Bonus de escritura: +${Math.round(yard().bonus * 100)}%`;
-  els.stars.textContent = "*****".slice(0, Math.min(5, 1 + Math.floor(state.level / 12))).padEnd(5, "-");
+  els.yardTier.textContent = board.name;
+  els.yardBonus.textContent = board.passive;
+  els.stars.textContent = `${board.rarity} - ${"*".repeat(Math.min(5, 1 + Math.floor(state.level / 12))).padEnd(5, "-")}`;
   els.rebirths.textContent = state.rebirths;
   els.globalMultiplier.textContent = `x${globalMultiplier().toFixed(2)}`;
   els.rebirthBar.style.width = `${Math.min(100, state.scrap / 50000 * 100)}%`;
@@ -352,12 +575,13 @@ function render() {
   els.rebirthButton.disabled = state.scrap < 50000;
   els.lifetime.textContent = fmt(state.lifetime);
   els.manualClicks.textContent = fmt(state.manualClicks);
-  els.autoRate.textContent = `${fmt(autoRate())}/s`;
+  els.autoRate.textContent = `${fmt(Math.ceil(autoRate() * autoMultiplier()))}/s`;
   els.bestCombo.textContent = `x${state.bestCombo}`;
   els.soundButton.textContent = `Sonido: ${state.sound ? "si" : "no"}`;
   renderShop();
   renderMachines();
-  renderParts();
+  renderKeyboards();
+  renderCards();
 }
 
 function renderShop() {
@@ -367,20 +591,41 @@ function renderShop() {
 
 function renderMachines() {
   els.machineCount.textContent = `${machines.filter(item => item.owned > 0).length}/${machines.length}`;
-  els.machineList.innerHTML = machines.map(item => shopHtml(item, "buyMachine", `${fmt(item.rate)}/s`)).join("");
+  els.machineList.innerHTML = machines.map(item => shopHtml(item, "buyMachine", `${fmt(item.rate)}/s - Nv ${item.owned}`)).join("");
 }
 
-function renderParts() {
-  const unlocked = parts.filter(part => state.lifetime >= part.at).length;
-  els.collectionCount.textContent = `${unlocked}/${parts.length}`;
-  els.parts.innerHTML = parts.map(part => {
-    const open = state.lifetime >= part.at;
-    return `<article class="part-card ${open ? "" : "locked"}">
-      <span class="part-icon">${open ? part.icon : "LOCK"}</span>
-      <strong>${open ? part.name : "Bloqueado"}</strong>
-      <small>${fmt(part.at)} clics</small>
+function renderKeyboards() {
+  const unlocked = keyboards.filter(board => state.ownedKeyboards.includes(board.id)).length;
+  els.collectionCount.textContent = `${unlocked}/${keyboards.length}`;
+  els.parts.innerHTML = keyboards.map(board => {
+    const open = state.ownedKeyboards.includes(board.id);
+    const active = state.equippedKeyboard === board.id;
+    return `<article class="part-card ${open ? "" : "locked"} ${active ? "active" : ""}">
+      <span class="part-icon">${open ? board.icon : "LOCK"}</span>
+      <strong>${open ? board.name : "Bloqueado"}</strong>
+      <small>${open ? board.passive : `${fmt(board.unlockAt)} clics`}</small>
+      <button type="button" onclick="equipKeyboard('${board.id}')" ${open && !active ? "" : "disabled"}>${active ? "Activo" : "Equipar"}</button>
     </article>`;
   }).join("");
+}
+
+function renderCards() {
+  els.deckCount.textContent = `${state.activeCards.length} cartas`;
+  els.cardChoices.innerHTML = state.cardChoices.length === 0
+    ? `<p class="empty-card-text">Sube cada 3 niveles para elegir una carta.</p>`
+    : state.cardChoices.map(id => cardHtml(cardPool.find(card => card.id === id), true)).join("");
+  els.activeCards.innerHTML = state.activeCards.length === 0
+    ? `<p class="empty-card-text">Sin cartas activas todavia.</p>`
+    : state.activeCards.map(id => cardHtml(cardPool.find(card => card.id === id), false)).join("");
+}
+
+function cardHtml(card, pickable) {
+  return `<article class="build-card ${card.rarity}">
+    <span>${card.tag}</span>
+    <strong>${card.name}</strong>
+    <p>${card.desc}</p>
+    ${pickable ? `<button type="button" onclick="pickCard('${card.id}')">Elegir</button>` : ""}
+  </article>`;
 }
 
 function shopHtml(item, fn, meta = item.desc) {
@@ -392,10 +637,10 @@ function shopHtml(item, fn, meta = item.desc) {
   </article>`;
 }
 
-function floatText(text, x, y) {
+function floatText(text, x, y, critical = false) {
   const zone = els.scrapZone.getBoundingClientRect();
   const el = document.createElement("div");
-  el.className = "float";
+  el.className = `float ${critical ? "critical" : ""}`;
   el.textContent = text;
   el.style.left = `${Math.max(20, Math.min(zone.width - 120, x - zone.left - 45))}px`;
   el.style.top = `${Math.max(20, Math.min(zone.height - 60, y - zone.top - 20))}px`;
@@ -403,11 +648,11 @@ function floatText(text, x, y) {
   setTimeout(() => el.remove(), 800);
 }
 
-function sparks(x, y) {
+function sparks(x, y, critical = false) {
   const zone = els.scrapZone.getBoundingClientRect();
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < (critical ? 18 : 8); i++) {
     const spark = document.createElement("i");
-    spark.className = "spark";
+    spark.className = `spark ${critical ? "critical" : ""}`;
     spark.style.left = `${x - zone.left}px`;
     spark.style.top = `${y - zone.top}px`;
     spark.style.setProperty("--x", `${-70 + Math.random() * 140}px`);
@@ -417,10 +662,11 @@ function sparks(x, y) {
   }
 }
 
-function keySound(code) {
+function keySound(code, board) {
+  const skinOffset = keyboards.findIndex(item => item.id === board.id) * 18;
   const base = code === "Space" ? 150 : code.includes("Shift") || code === "Enter" || code === "Backspace" ? 190 : 235;
   const variation = [...code].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 70;
-  beep(base + variation, 0.018, "square");
+  beep(base + variation + skinOffset, 0.018, "square");
   setTimeout(() => beep(base * 0.45 + variation, 0.012, "triangle"), 22);
 }
 
@@ -448,6 +694,10 @@ function toast(text) {
   setTimeout(() => el.remove(), 3300);
 }
 
+function shuffle(items) {
+  return [...items].sort(() => Math.random() - 0.5);
+}
+
 function fmt(value) {
   return Math.floor(value).toLocaleString("es-ES");
 }
@@ -466,8 +716,13 @@ function load() {
   try {
     const saved = JSON.parse(raw);
     Object.assign(state, saved.state);
+    state.ownedKeyboards ||= ["office"];
+    state.equippedKeyboard ||= "office";
+    state.activeCards ||= [];
+    state.cardChoices ||= [];
     saved.upgrades?.forEach((owned, index) => upgrades[index].owned = owned);
     saved.machines?.forEach((owned, index) => machines[index].owned = owned);
+    unlockKeyboards();
   } catch {
     localStorage.removeItem("keyboard-clicker-save");
   }
@@ -475,3 +730,5 @@ function load() {
 
 window.buyUpgrade = buyUpgrade;
 window.buyMachine = buyMachine;
+window.equipKeyboard = equipKeyboard;
+window.pickCard = pickCard;
