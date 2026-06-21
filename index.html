@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Keyboard Clicker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="rail left">
+        <section class="panel rank-card">
+          <span class="label">Nivel</span>
+          <strong id="level">1</strong>
+          <div class="meter"><span id="xpBar"></span></div>
+          <small id="xpText">0 / 200 reputacion</small>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Teclado actual</h2>
+            <span id="yardTier">Teclado de oficina</span>
+          </div>
+          <p class="muted" id="yardBonus">Bonus de escritura: +0%</p>
+          <div class="stars" id="stars"></div>
+        </section>
+
+        <section class="panel grow">
+          <div class="panel-head">
+            <h2>Mejoras</h2>
+            <span id="upgradeCount">0/5</span>
+          </div>
+          <div class="stack" id="upgradeList"></div>
+        </section>
+      </aside>
+
+      <section class="stage">
+        <header class="scoreboard">
+          <span>Clics totales</span>
+          <strong id="scrap">0</strong>
+          <small><b id="perClick">1</b> por tecla</small>
+        </header>
+
+        <div class="scrap-zone" id="scrapZone">
+          <div class="keyboard" id="keyboard" aria-label="Teclado clicable"></div>
+          <div class="combo-pill" id="combo">Combo x1</div>
+          <div class="event-layer" id="eventLayer"></div>
+        </div>
+
+        <section class="collection">
+          <div class="panel-head">
+            <h2>Coleccion de teclados</h2>
+            <span id="collectionCount">1/6</span>
+          </div>
+          <div class="parts" id="parts"></div>
+        </section>
+      </section>
+
+      <aside class="rail right">
+        <section class="panel rebirth">
+          <div>
+            <span class="label">Renacimiento</span>
+            <strong id="rebirths">0</strong>
+          </div>
+          <p class="muted">Multiplicador permanente: <b id="globalMultiplier">x1.00</b></p>
+          <div class="meter"><span id="rebirthBar"></span></div>
+          <small id="rebirthText">Necesitas 50.000 clics</small>
+          <button id="rebirthButton" type="button">Renacer</button>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Estadisticas</h2>
+          </div>
+          <div class="stats">
+            <span>Total tecleado</span><b id="lifetime">0</b>
+            <span>Pulsaciones manuales</span><b id="manualClicks">0</b>
+            <span>Produccion auto</span><b id="autoRate">0/s</b>
+            <span>Mejor combo</span><b id="bestCombo">x1</b>
+          </div>
+        </section>
+
+        <section class="panel grow">
+          <div class="panel-head">
+            <h2>Maquinas</h2>
+            <span id="machineCount">0/5</span>
+          </div>
+          <div class="stack" id="machineList"></div>
+        </section>
+      </aside>
+    </main>
+
+    <nav class="dock">
+      <button class="dock-item active" data-view="play" type="button">Juego</button>
+      <button class="dock-item" data-view="parts" type="button">Piezas</button>
+      <button class="dock-item" data-view="stats" type="button">Stats</button>
+      <button class="dock-item" id="soundButton" type="button">Sonido: si</button>
+      <button class="dock-item danger" id="resetButton" type="button">Reset</button>
+    </nav>
+
+    <div class="toasts" id="toasts"></div>
+    <script type="module" src="/game.js"></script>
+  </body>
+</html>
