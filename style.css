@@ -330,7 +330,7 @@ small,
 .keycap.special-key.pressed {
   border-image-source: var(--key-special-pressed);
   border-image-slice: 44% 22% 0% 22% fill;
-  border-image-width: 44% 22% 0% 22%;
+  border-image-width: 60% 22% 8% 22%;
   transform: translateY(2px);
 }
 
